@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TooRizzky - Technology & Innovation</title>
+    <title>TooRizzky - Innovative Mobile Applications</title>
+    <meta name="description" content="Building the future of social and healthcare apps with AI-powered innovation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,13 +15,27 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #fff;
-            overflow-x: hidden;
+        :root {
+            --primary: #ec4899;
+            --secondary: #8b5cf6;
+            --accent: #6366f1;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
         .background-animation {
             position: fixed;
             top: 0;
@@ -25,23 +43,78 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            opacity: 0.1;
+            opacity: 0.15;
+            overflow: hidden;
         }
 
-        .particle {
+        .gradient-orb {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(45deg, #6366f1, #ec4899);
             border-radius: 50%;
-            animation: float 20s infinite;
+            filter: blur(80px);
+            animation: float 30s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100px) translateX(50px); }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.9); }
         }
 
+        /* Particles for Home Page */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 15s infinite ease-in-out;
+        }
+
+        @keyframes particleFloat {
+            0% { 
+                opacity: 0;
+            }
+            5% { 
+                opacity: 1; 
+            }
+            95% { 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(-120vh) translateX(var(--drift));
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -52,454 +125,1213 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(236, 72, 153, 0.1);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 1rem 5%;
             background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
             font-size: 1.8rem;
             font-weight: 900;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+            background: linear-gradient(135deg, var(--accent), var(--secondary), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -1px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
-            color: #94a3b8;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.3s;
             cursor: pointer;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #ec4899;
+            color: var(--primary);
         }
 
         .nav-links a.active {
-            color: #ec4899;
+            color: var(--primary);
         }
 
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(236, 72, 153, 0.2);
+            z-index: 99;
+            padding: 1rem 0;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 1rem 5%;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: var(--primary);
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        /* Page Sections */
         .page-section {
             display: none;
-            padding-top: 80px;
+            padding-top: 100px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
         }
 
         .page-section.active {
             display: block;
+            animation: fadeIn 0.5s ease-in;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
         .hero {
-            position: relative;
-            z-index: 1;
-            min-height: 80vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 4rem 5%;
+            position: relative;
         }
 
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: clamp(3rem, 8vw, 5.5rem);
             font-weight: 900;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #f97316);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glow 3s ease-in-out infinite;
+            animation: gradient 8s ease infinite;
+            line-height: 1.1;
         }
 
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(236, 72, 153, 0.8)); }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .hero p {
-            font-size: 1.5rem;
-            color: #94a3b8;
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text);
             margin-bottom: 1rem;
-            max-width: 700px;
+            max-width: 800px;
+            font-weight: 500;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        .company-info {
-            font-size: 1rem;
-            color: #64748b;
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
             margin-bottom: 3rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.5s both;
         }
 
-        .cta-button {
-            background: linear-gradient(90deg, #8b5cf6, #ec4899);
-            color: white;
-            padding: 1rem 3rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
-        }
-
-        .projects {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             position: relative;
-            z-index: 1;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(236, 72, 153, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Stats Section on Home */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects {
             padding: 5rem 5%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        .section-title {
+        .section-header {
             text-align: center;
-            font-size: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 1rem;
-            background: linear-gradient(90deg, #6366f1, #ec4899);
+            background: linear-gradient(135deg, var(--accent), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .section-subtitle {
-            text-align: center;
-            color: #64748b;
+            color: var(--text-muted);
             font-size: 1.2rem;
-            margin-bottom: 4rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2.5rem;
         }
 
         .project-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
-            padding: 2.5rem;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            backdrop-filter: blur(10px);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 30px;
+            padding: 3rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary), var(--primary));
+            transform: scaleX(0);
+            transition: transform 0.4s;
         }
 
         .project-card:hover::before {
-            opacity: 1;
+            transform: scaleX(1);
         }
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
             border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
         }
 
         .project-icon {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
         }
 
         .project-card h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            color: #fff;
+            color: var(--text);
         }
 
-        .project-card p {
-            color: #94a3b8;
-            line-height: 1.6;
+        .project-description {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .project-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding: 0;
+        }
+
+        .project-features li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .project-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            color: var(--success);
+            font-size: 0.85rem;
+            font-weight: 600;
             margin-bottom: 1.5rem;
         }
 
-        .status-badge {
-            display: inline-block;
-            background: linear-gradient(90deg, #8b5cf6, #ec4899);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
+        .project-status::before {
+            content: '●';
+            font-size: 1.2rem;
             animation: pulse 2s ease-in-out infinite;
+        }
+
+        .project-status.in-development {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--warning);
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            50% { opacity: 0.5; }
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+            color: var(--secondary);
+        }
+
+        .project-link::after {
+            content: '→';
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .project-link:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Careers Section */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .job-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 25px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(20px);
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .job-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            color: var(--success);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .job-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .job-type {
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-description {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-requirements {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .job-requirements li {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .job-requirements li::before {
+            content: '•';
+            color: var(--primary);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Application Form */
+        .application-form {
+            max-width: 700px;
+            margin: 4rem auto 0;
+            padding: 3rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(236, 72, 153, 0.4);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-message {
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            display: block;
         }
 
         /* Team Section */
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
 
         .team-card {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 25px;
             padding: 2.5rem;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            backdrop-filter: blur(20px);
         }
 
         .team-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
             border-color: rgba(236, 72, 153, 0.5);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
         }
 
         .team-avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
-            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            font-weight: 900;
+            font-size: 2rem;
+            font-weight: 800;
             color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
         }
 
         .team-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            color: #fff;
+            color: var(--text);
         }
 
         .team-role {
-            color: #8b5cf6;
+            color: var(--primary);
             font-weight: 600;
+            font-size: 0.95rem;
             margin-bottom: 1rem;
         }
 
         .team-bio {
-            color: #94a3b8;
+            color: var(--text-muted);
+            font-size: 0.95rem;
             line-height: 1.6;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .team-link {
-            display: inline-block;
-            color: #ec4899;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
         }
 
         .team-link:hover {
-            color: #8b5cf6;
+            color: var(--primary);
+            gap: 0.75rem;
         }
 
         /* About Section */
         .about-content {
             max-width: 900px;
             margin: 0 auto;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
-            padding: 3rem;
-            backdrop-filter: blur(10px);
+            padding: 2rem;
         }
 
         .about-content h3 {
             font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #fff;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .about-content p {
-            color: #94a3b8;
+            color: var(--text-muted);
+            font-size: 1.1rem;
             line-height: 1.8;
             margin-bottom: 1.5rem;
-            font-size: 1.1rem;
         }
 
         .company-details {
-            background: rgba(15, 23, 42, 0.5);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
             padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(20px);
         }
 
         .company-details h4 {
-            color: #8b5cf6;
-            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
         }
 
         .company-details p {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
+        .company-details strong {
+            color: var(--primary);
+        }
+
+        /* Footer */
         footer {
             position: relative;
             z-index: 1;
-            text-align: center;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
             padding: 3rem 5%;
+            text-align: center;
             border-top: 1px solid rgba(139, 92, 246, 0.2);
-            color: #64748b;
+            margin-top: 5rem;
         }
 
         footer p {
-            margin-bottom: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
         }
 
         .social-links {
+            margin-top: 2rem;
             display: flex;
-            gap: 1.5rem;
             justify-content: center;
-            margin-top: 1rem;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .social-links a {
-            color: #94a3b8;
+            color: var(--text-muted);
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 1rem;
         }
 
         .social-links a:hover {
-            color: #ec4899;
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
         }
 
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
             .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
+                display: none;
             }
 
-            .projects-grid, .team-grid {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 3rem 1.5rem;
+                min-height: 80vh;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .project-card,
+            .job-card,
+            .team-card {
+                padding: 2rem;
+            }
+
+            .application-form {
+                padding: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .projects-grid,
+            .job-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .projects,
+            .about-content {
+                padding: 3rem 3%;
+            }
+
+            .project-card,
+            .job-card,
+            .application-form {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation" id="particles"></div>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
 
-    <nav>
-        <div class="logo">TooRizzky</div>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo" data-page="home">TooRizzky</div>
         <ul class="nav-links">
             <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
             <li><a href="#" data-page="projects" class="nav-link">Projects</a></li>
+            <li><a href="#" data-page="careers" class="nav-link">Careers</a></li>
             <li><a href="#" data-page="team" class="nav-link">Team</a></li>
             <li><a href="#" data-page="about" class="nav-link">About</a></li>
         </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
     </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#" data-page="home" class="mobile-link active">Home</a>
+        <a href="#" data-page="projects" class="mobile-link">Projects</a>
+        <a href="#" data-page="careers" class="mobile-link">Careers</a>
+        <a href="#" data-page="team" class="mobile-link">Team</a>
+        <a href="#" data-page="about" class="mobile-link">About</a>
+    </div>
 
     <!-- HOME PAGE -->
     <section class="page-section active" id="home">
         <div class="hero">
-            <h1>TooRizzky</h1>
-            <p>Building the future of mobile applications. Innovation meets design.</p>
-            <p class="company-info">A subsidiary of RiskyTrick's LLC | Based in Michigan</p>
-            <a href="#" class="cta-button" data-page="projects">Explore Our Vision</a>
+            <h1>Building Tomorrow's Apps, Today</h1>
+            <p class="hero-subtitle">Innovative mobile solutions powered by cutting-edge AI technology</p>
+            <p class="hero-description">TooRizzky | A DBA of RiskyTrick's LLC | Based in Michigan</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary" data-page="projects">
+                    <span>Explore Our Projects</span>
+                    <span>→</span>
+                </a>
+                <a href="#" class="btn btn-secondary" data-page="careers">
+                    <span>Join Our Team</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Flagship Products</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Team Members</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">AI-Powered</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2025</div>
+                <div class="stat-label">Founded</div>
+            </div>
         </div>
     </section>
 
     <!-- PROJECTS PAGE -->
     <section class="page-section" id="projects">
         <div class="projects">
-            <h2 class="section-title">Our Projects</h2>
-            <p class="section-subtitle">Revolutionary apps currently in development</p>
+            <div class="section-header">
+                <h2 class="section-title">Our Flagship Projects</h2>
+                <p class="section-subtitle">Transforming industries with innovative AI-powered applications</p>
+            </div>
             
             <div class="projects-grid">
+                <!-- Rizzculator -->
                 <div class="project-card">
-                    <svg class="project-icon" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="30" cy="30" r="25" fill="none" stroke="url(#grad1)" stroke-width="3"/>
-                        <path d="M 30 15 L 30 30 L 40 40" stroke="url(#grad1)" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="30" cy="30" r="3" fill="url(#grad1)"/>
-                    </svg>
-                    <h3>Project X</h3>
-                    <p>AI-powered mental health teledoc platform connecting patients with licensed professionals through intelligent screening and personalized care recommendations.</p>
-                    <span class="status-badge">🚀 In Development</span>
+                    <div class="project-icon">🔥</div>
+                    <div class="project-status">Live Now</div>
+                    <h3>Rizzculator</h3>
+                    <p class="project-description">
+                        The revolutionary AI-powered social platform where authenticity meets gamification. 
+                        Get brutally honest AI feedback, compete in daily challenges, earn Rizz Coins, and 
+                        connect with a community that values real over fake.
+                    </p>
+                    <ul class="project-features">
+                        <li>AI roasting & reality scoring</li>
+                        <li>Daily challenges & competitions</li>
+                        <li>Rizz Coins economy & rewards</li>
+                        <li>TikTok-style feed & stories</li>
+                        <li>Real-time DMs & social features</li>
+                        <li>Gender-aware personalization</li>
+                    </ul>
+                    <a href="https://rizzculator.vercel.app" target="_blank" class="project-link" rel="noopener noreferrer">
+                        Launch App
+                    </a>
                 </div>
 
+                <!-- Rizz0nance -->
                 <div class="project-card">
-                    <svg class="project-icon" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="30" cy="30" r="10" fill="url(#grad2)"/>
-                        <circle cx="15" cy="25" r="6" fill="url(#grad2)" opacity="0.6"/>
-                        <circle cx="45" cy="25" r="6" fill="url(#grad2)" opacity="0.6"/>
-                        <circle cx="30" cy="15" r="6" fill="url(#grad2)" opacity="0.6"/>
-                        <circle cx="30" cy="45" r="6" fill="url(#grad2)" opacity="0.6"/>
-                        <line x1="20" y1="27" x2="24" y2="29" stroke="#8b5cf6" stroke-width="2"/>
-                        <line x1="40" y1="27" x2="36" y2="29" stroke="#8b5cf6" stroke-width="2"/>
-                    </svg>
-                    <h3>Project Y</h3>
-                    <p>Next-generation Utility for In-home Services.</p>
-                    <span class="status-badge">🚀 In Development</span>
+                    <div class="project-icon">💚</div>
+                    <div class="project-status in-development">In Development</div>
+                    <h3>Rizz0nance</h3>
+                    <p class="project-description">
+                        Next-generation AI-powered mental health platform connecting patients with licensed 
+                        professionals through intelligent screening, personalized recommendations, and 
+                        comprehensive care management.
+                    </p>
+                    <ul class="project-features">
+                        <li>AI-powered symptom screening</li>
+                        <li>Smart provider matching</li>
+                        <li>Integrated telehealth sessions</li>
+                        <li>Mood & progress tracking</li>
+                        <li>Secure HIPAA-compliant platform</li>
+                        <li>24/7 crisis support resources</li>
+                    </ul>
+                    <a href="#" class="project-link" data-page="about">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div style="margin-top: 5rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">
+                    More Innovation Coming Soon
+                </h3>
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.7;">
+                    We're constantly pushing boundaries and developing new solutions. 
+                    From utility services to gaming experiences, our pipeline is filled with 
+                    exciting projects that will reshape how people interact with technology.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CAREERS PAGE -->
+    <section class="page-section" id="careers">
+        <div class="projects">
+            <div class="section-header">
+                <h2 class="section-title">Join Our Team</h2>
+                <p class="section-subtitle">Build the future of mobile applications with us</p>
+            </div>
+
+            <div class="job-grid">
+                <!-- Software Developer Intern -->
+                <div class="job-card">
+                    <div class="job-badge">🚀 Open Position</div>
+                    <h3>Software Developer Intern</h3>
+                    <p class="job-type">Internship • Remote/Hybrid • Michigan, USA</p>
+                    <p class="job-description">
+                        We're looking for passionate MS Computer Science students to join our team and work on 
+                        cutting-edge AI-powered mobile applications. Get hands-on experience with React, React Native, 
+                        Firebase, and modern AI technologies.
+                    </p>
+                    <ul class="job-requirements">
+                        <li>Currently pursuing MS in Computer Science or related field in the US</li>
+                        <li>Strong foundation in JavaScript/TypeScript and React</li>
+                        <li>Interest in mobile development and AI technologies</li>
+                        <li>Excellent problem-solving and communication skills</li>
+                        <li>Self-motivated and eager to learn</li>
+                        <li>Available for 20+ hours per week</li>
+                    </ul>
                 </div>
 
-                <div class="project-card">
-                    <svg class="project-icon" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect x="15" y="15" width="30" height="30" rx="5" fill="url(#grad3)" opacity="0.3" transform="rotate(-10 30 30)"/>
-                        <rect x="20" y="20" width="30" height="30" rx="5" fill="url(#grad3)" opacity="0.5" transform="rotate(5 30 30)"/>
-                        <rect x="25" y="25" width="30" height="30" rx="5" fill="url(#grad3)" opacity="0.7"/>
-                    </svg>
-                    <h3>Project Z</h3>
-                    <p>Revolutionary Game Based Money Multiplier for common man</p>
-                    <span class="status-badge">🚀 In Development</span>
+                <!-- AI/ML Intern -->
+                <div class="job-card">
+                    <div class="job-badge">🚀 Open Position</div>
+                    <h3>AI/ML Developer Intern</h3>
+                    <p class="job-type">Internship • Remote/Hybrid • Michigan, USA</p>
+                    <p class="job-description">
+                        Join our AI team to develop and implement machine learning models for our social and 
+                        healthcare platforms. Work with NLP, computer vision, and recommendation systems.
+                    </p>
+                    <ul class="job-requirements">
+                        <li>Currently pursuing MS in Computer Science, AI/ML, or related field in the US</li>
+                        <li>Experience with Python, TensorFlow/PyTorch</li>
+                        <li>Knowledge of NLP and/or computer vision</li>
+                        <li>Familiarity with cloud platforms (Firebase, AWS, or GCP)</li>
+                        <li>Strong analytical and research skills</li>
+                        <li>Portfolio of ML projects (GitHub, Kaggle, etc.)</li>
+                    </ul>
                 </div>
+
+                <!-- Mobile Developer Intern -->
+                <div class="job-card">
+                    <div class="job-badge">🚀 Open Position</div>
+                    <h3>Mobile Developer Intern</h3>
+                    <p class="job-type">Internship • Remote/Hybrid • Michigan, USA</p>
+                    <p class="job-description">
+                        Help us build beautiful, performant mobile apps using React Native. Work on real-world 
+                        projects that impact thousands of users across iOS and Android platforms.
+                    </p>
+                    <ul class="job-requirements">
+                        <li>Currently pursuing MS in Computer Science or related field in the US</li>
+                        <li>Experience with React Native or native mobile development</li>
+                        <li>Understanding of mobile UI/UX best practices</li>
+                        <li>Knowledge of RESTful APIs and state management</li>
+                        <li>Familiarity with Git and agile development</li>
+                        <li>Published apps in App Store/Play Store (bonus)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Application Form -->
+            <div class="application-form">
+                <h3 class="form-title">Apply Now</h3>
+                <p class="form-subtitle">Fill out the form below and we'll get back to you within 48 hours.</p>
+                
+                <form id="applicationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="university">University *</label>
+                            <input type="text" id="university" name="university" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="major">Major *</label>
+                            <input type="text" id="major" name="major" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="graduationDate">Expected Graduation *</label>
+                            <input type="month" id="graduationDate" name="graduationDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position *</label>
+                            <select id="position" name="position" required>
+                                <option value="">Select Position</option>
+                                <option value="Software Developer Intern">Software Developer Intern</option>
+                                <option value="AI/ML Developer Intern">AI/ML Developer Intern</option>
+                                <option value="Mobile Developer Intern">Mobile Developer Intern</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn Profile URL *</label>
+                        <input type="url" id="linkedin" name="linkedin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="github">GitHub Profile URL</label>
+                        <input type="url" id="github" name="github">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="resume">Resume URL (Google Drive/Dropbox/OneDrive) *</label>
+                        <input type="url" id="resume" name="resume" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="coverLetter">Why do you want to join TooRizzky? *</label>
+                        <textarea id="coverLetter" name="coverLetter" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        Submit Application
+                    </button>
+
+                    <div class="form-message" id="formMessage"></div>
+                </form>
             </div>
         </div>
     </section>
@@ -507,37 +1339,53 @@
     <!-- TEAM PAGE -->
     <section class="page-section" id="team">
         <div class="projects">
-            <h2 class="section-title">Our Team</h2>
-            <p class="section-subtitle">Meet the innovators behind TooRizzky</p>
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-subtitle">The innovators and builders behind TooRizzky</p>
+            </div>
             
             <div class="team-grid">
                 <div class="team-card">
                     <div class="team-avatar">BN</div>
                     <h3>Bhavesh Naidu Kulluru</h3>
                     <p class="team-role">Founder & CEO</p>
-                    <p class="team-bio">Visionary entrepreneur driving innovation in mobile technology and AI-powered solutions.</p>
-                    <a href="https://www.kullurubhaveshnaidu.com" target="_blank" class="team-link">View Portfolio →</a>
+                    <p class="team-bio">
+                        Visionary entrepreneur driving innovation in mobile technology and AI-powered solutions. 
+                        Leading TooRizzky's mission to create impactful applications.
+                    </p>
+                    <a href="https://www.kullurubhaveshnaidu.com" target="_blank" class="team-link" rel="noopener noreferrer">
+                        View Portfolio →
+                    </a>
                 </div>
 
                 <div class="team-card">
                     <div class="team-avatar">NJ</div>
                     <h3>Nathaniel Jason</h3>
                     <p class="team-role">Senior Software Developer</p>
-                    <p class="team-bio">Expert in building scalable mobile applications with cutting-edge technologies and best practices.</p>
+                    <p class="team-bio">
+                        Expert in building scalable mobile applications with cutting-edge technologies. 
+                        Specializes in React, React Native, and modern web frameworks.
+                    </p>
                 </div>
 
                 <div class="team-card">
                     <div class="team-avatar">DK</div>
                     <h3>Dathwik Kollikonda</h3>
                     <p class="team-role">Software Developer Intern</p>
-                    <p class="team-bio">Passionate developer learning and contributing to innovative mobile solutions.</p>
+                    <p class="team-bio">
+                        Passionate developer learning and contributing to innovative mobile solutions. 
+                        Focused on UI/UX and frontend development.
+                    </p>
                 </div>
 
                 <div class="team-card">
                     <div class="team-avatar">TB</div>
                     <h3>Tarun Bevara</h3>
                     <p class="team-role">AI Architect</p>
-                    <p class="team-bio">Specialist in designing and implementing AI-driven architectures for intelligent applications.</p>
+                    <p class="team-bio">
+                        Specialist in designing and implementing AI-driven architectures. 
+                        Expert in machine learning, NLP, and intelligent system design.
+                    </p>
                 </div>
             </div>
         </div>
@@ -546,14 +1394,26 @@
     <!-- ABOUT PAGE -->
     <section class="page-section" id="about">
         <div class="projects">
-            <h2 class="section-title">About Us</h2>
-            <p class="section-subtitle">Innovation through technology</p>
+            <div class="section-header">
+                <h2 class="section-title">About TooRizzky</h2>
+                <p class="section-subtitle">Innovation through technology and purpose</p>
+            </div>
             
             <div class="about-content">
                 <h3>Who We Are</h3>
-                <p>TooRizzky is a forward-thinking mobile app development startup dedicated to creating innovative solutions that transform how people interact with technology. We specialize in AI-powered applications, particularly in the healthcare and wellness sectors.</p>
+                <p>
+                    TooRizzky is a forward-thinking mobile app development startup dedicated to creating 
+                    innovative solutions that transform how people interact with technology. We specialize 
+                    in AI-powered applications across social media and healthcare sectors, with a focus on 
+                    authenticity, gamification, and meaningful user experiences.
+                </p>
                 
-                <p>Our mission is to leverage cutting-edge technology to build applications that make a meaningful impact on people's lives. From mental health support to intelligent user experiences, we're committed to pushing the boundaries of what's possible in mobile development.</p>
+                <p>
+                    Our flagship products—Rizzculator and Rizz0nance—represent our commitment to pushing 
+                    boundaries. From revolutionizing social media with AI-powered honesty to transforming 
+                    mental healthcare accessibility, we're building applications that make a real difference 
+                    in people's lives.
+                </p>
 
                 <div class="company-details">
                     <h4>Company Information</h4>
@@ -561,54 +1421,148 @@
                     <p><strong>DBA:</strong> TooRizzky</p>
                     <p><strong>Location:</strong> Michigan, United States</p>
                     <p><strong>Founded:</strong> 2025</p>
-                    <p><strong>Focus:</strong> Software Development</p>
+                    <p><strong>Focus:</strong> AI-Powered Mobile Applications</p>
+                    <p><strong>Specialization:</strong> Social Media & Healthcare Technology</p>
                 </div>
 
-                <h3 style="margin-top: 2rem;">Our Vision</h3>
-                <p>We envision a future where technology seamlessly integrates with daily life, providing intelligent, personalized experiences that enhance well-being and productivity. Through our innovative projects, we're building that future one application at a time.</p>
+                <h3>Our Mission</h3>
+                <p>
+                    To leverage cutting-edge AI technology to build applications that promote authenticity, 
+                    improve mental wellness, and create engaging experiences. We believe technology should 
+                    enhance human connection, not replace it—and every app we build reflects this philosophy.
+                </p>
+
+                <h3>Our Vision</h3>
+                <p>
+                    We envision a future where technology seamlessly integrates with daily life, providing 
+                    intelligent, personalized experiences that enhance well-being and productivity. Through 
+                    our innovative projects, we're building that future one application at a time.
+                </p>
+
+                <h3>Why TooRizzky?</h3>
+                <p>
+                    We're not just building apps—we're creating movements. Rizzculator is changing how 
+                    people view social media by rewarding authenticity over perfection. Rizz0nance is 
+                    breaking down barriers to mental healthcare access. And we're just getting started.
+                </p>
+
+                <p>
+                    Our team combines technical excellence with creative vision, backed by a deep 
+                    understanding of user psychology and market needs. We don't follow trends—we create them.
+                </p>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 TooRizzky | A DBA of RiskyTrick's LLC</p>
-        <p>Building tomorrow's mobile experiences today</p>
+        <p style="font-size: 1.1rem; font-weight: 600; color: var(--text);">&copy; 2025 TooRizzky</p>
+        <p>A DBA of RiskyTrick's LLC</p>
+        <p style="margin-top: 1rem;">Building tomorrow's mobile experiences today</p>
         <p style="font-size: 0.9rem; margin-top: 0.5rem;">Michigan, USA</p>
         <div class="social-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
-            <a href="mailto:contact@toorizzky.com">Contact</a>
+            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="mailto:contact@toorizzky.com">Contact Us</a>
         </div>
     </footer>
 
     <script>
-        // Generate animated background particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            particlesContainer.appendChild(particle);
+        // Generate floating particles on home page
+        function createParticles() {
+            const hero = document.querySelector('.hero');
+            if (!hero) return;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random starting vertical position (spread across screen)
+                particle.style.top = Math.random() * 100 + 'vh';
+                
+                // Random horizontal drift
+                const drift = (Math.random() - 0.5) * 100; // -50 to 50px
+                particle.style.setProperty('--drift', drift + 'px');
+                
+                // Random animation delay for staggered effect
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                // Random animation duration for variety
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                // Random size variation
+                const size = 2 + Math.random() * 3; // 2-5px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                hero.appendChild(particle);
+            }
         }
 
-        // Page navigation
+        // Call on page load
+        createParticles();
+
+        // Smooth scroll on navigation
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            mobileMenuBtn.textContent = mobileNav.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Page navigation system
         const navLinks = document.querySelectorAll('.nav-link');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
         const pages = document.querySelectorAll('.page-section');
-        const ctaButton = document.querySelector('.cta-button');
+        const logo = document.querySelector('.logo');
+        const ctaButtons = document.querySelectorAll('[data-page]');
 
         function showPage(pageName) {
+            // Hide all pages and remove active from links
             pages.forEach(page => page.classList.remove('active'));
             navLinks.forEach(link => link.classList.remove('active'));
+            mobileLinks.forEach(link => link.classList.remove('active'));
             
-            document.getElementById(pageName).classList.add('active');
-            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
+            // Show selected page and mark link as active
+            const targetPage = document.getElementById(pageName);
+            const targetLink = document.querySelector(`[data-page="${pageName}"].nav-link`);
+            const targetMobileLink = document.querySelector(`[data-page="${pageName}"].mobile-link`);
             
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            if (targetLink) {
+                targetLink.classList.add('active');
+            }
+
+            if (targetMobileLink) {
+                targetMobileLink.classList.add('active');
+            }
+            
+            // Close mobile menu
+            mobileNav.classList.remove('active');
+            mobileMenuBtn.textContent = '☰';
+            
+            // Smooth scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Add click handlers to all navigation elements
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -617,12 +1571,144 @@
             });
         });
 
-        if (ctaButton) {
-            ctaButton.addEventListener('click', (e) => {
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                showPage('projects');
+                const pageName = link.getAttribute('data-page');
+                showPage(pageName);
             });
-        }
+        });
+
+        // Logo click - go to home
+        logo.addEventListener('click', () => {
+            showPage('home');
+        });
+
+        // CTA buttons
+        ctaButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Check if it's an external link
+                const href = button.getAttribute('href');
+                if (href && href.startsWith('http')) {
+                    return; // Let it open normally
+                }
+                
+                e.preventDefault();
+                const pageName = button.getAttribute('data-page');
+                if (pageName) {
+                    showPage(pageName);
+                }
+            });
+        });
+
+        // Form submission
+        const applicationForm = document.getElementById('applicationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        applicationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Get form data
+            const formData = new FormData(applicationForm);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Create email body
+            const emailBody = `
+New Application Received from TooRizzky Website
+
+Position: ${data.position}
+
+Applicant Information:
+- Name: ${data.firstName} ${data.lastName}
+- Email: ${data.email}
+- Phone: ${data.phone}
+
+Education:
+- University: ${data.university}
+- Major: ${data.major}
+- Expected Graduation: ${data.graduationDate}
+
+Links:
+- LinkedIn: ${data.linkedin}
+- GitHub: ${data.github || 'Not provided'}
+- Resume: ${data.resume}
+
+Cover Letter:
+${data.coverLetter}
+
+---
+Submitted via TooRizzky Careers Page
+            `.trim();
+
+            // Use mailto (opens email client)
+            const mailtoLink = `mailto:contact@toorizzky.com?subject=Application: ${encodeURIComponent(data.position)} - ${encodeURIComponent(data.firstName + ' ' + data.lastName)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            formMessage.className = 'form-message success';
+            formMessage.textContent = 'Opening your email client... Please send the email to complete your application.';
+            
+            // Reset form
+            applicationForm.reset();
+            
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Application';
+            
+            // Hide message after 10 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 10000);
+        });
+
+        // Add smooth reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.project-card, .team-card, .job-card, .stat-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Prevent default on project link if it's internal
+        document.querySelectorAll('.project-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('http')) {
+                    return; // External link, let it open
+                }
+                
+                e.preventDefault();
+                const pageName = link.getAttribute('data-page');
+                if (pageName) {
+                    showPage(pageName);
+                }
+            });
+        });
     </script>
 </body>
 </html>
